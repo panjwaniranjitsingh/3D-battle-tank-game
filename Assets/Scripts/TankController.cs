@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TankController : SingletonDemo<TankController>
@@ -10,16 +10,24 @@ public class TankController : SingletonDemo<TankController>
     private Rigidbody m_tankRigidbody;
     const string HORIZONTAL = "Horizontal1";
     const string VERTICAL = "Vertical1";
+    Color BLUE = new Color32(20, 125, 248, 255);
+    Color RED = new Color32(167, 22, 22, 255);
+    Color GREEN = new Color32(57, 116, 57, 255);
+    Color YELLOW = new Color32(150, 154, 15, 255);
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] private Transform m_bulletPos;
-    [SerializeField] float bulletForce = 1000f;
+    [SerializeField] BulletScriptableObject playerBulletSO;
+    [SerializeField] private Transform m_bulletStockPos;
+    GameObject[] bullets;
+    [SerializeField] int noOfBulletsInStock = 10;
+    [SerializeField] int noOfBulletsFired = 0;
     [SerializeField] float health;
-    [SerializeField] float damage;
+    public float damage;
     [SerializeField] Color color;
     void Start()
     {
         m_tankRigidbody = GetComponent<Rigidbody>();
-
+        bullets = new GameObject[noOfBulletsInStock];
     }
     // Update is called once per frame
     void Update()
@@ -49,46 +57,51 @@ public class TankController : SingletonDemo<TankController>
 
        float turn = horizontal * TURNSPEED * Time.deltaTime;
        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-       m_tankRigidbody.MoveRotation(m_tankRigidbody.rotation * turnRotation);
+        m_tankRigidbody.MoveRotation(m_tankRigidbody.rotation * turnRotation);
     }
 
     public void FireBullet()
-    {
-        //Debug.Log("Bullet at "+m_bulletPos.position);
-        GameObject bullet = Instantiate(bulletPrefab, m_bulletPos.position, m_bulletPos.rotation);
-        bullet.GetComponent<Renderer>().material.color = color;
-        bullet.GetComponent<Rigidbody>().AddForce(m_bulletPos.forward* bulletForce);
-        Destroy(bullet, 3f);
+    { 
+        bullets[noOfBulletsFired].GetComponent<Bullet>().FireBullet(color, m_bulletPos, playerBulletSO, gameObject);
+        noOfBulletsFired++;
+        if (noOfBulletsFired == noOfBulletsInStock)
+            noOfBulletsFired = 0;
     }
 
-    public void SetPlayerTank(TankScriptableObject tankScriptableObject)
+    public void SetPlayerTank(TankScriptableObject tankScriptableObject,BulletScriptableObject bulletSO)
     {
-        gameObject.name = tankScriptableObject.name;
+        gameObject.name = tankScriptableObject.TankName;
         moveSpeed = tankScriptableObject.Speed;
         health = tankScriptableObject.Health;
         damage = tankScriptableObject.Damage;
-        bulletForce = tankScriptableObject.BulletScriptableObject.BulletForce;
+        playerBulletSO = bulletSO;
         GameObject TankRenderers = gameObject.transform.GetChild(0).gameObject;
         string plColor = tankScriptableObject.TankColor.ToString();
         switch (plColor)
         {
             case "Blue":
-                color = new Color32(20, 125, 248, 255);
+                color = BLUE;
                 break;
             case "Red":
-                color = new Color32(167, 22, 22, 255);
+                color = RED;
                 break;
             case "Green":
-                color = new Color32(57, 116, 57, 255);
+                color = GREEN;
                 break;
             case "Yellow":
-                color = new Color32(150, 154, 15, 255);
+                color = YELLOW;
                 break;
         }
         for (int i = 0; i < TankRenderers.transform.childCount; i++)
         {
             TankRenderers.transform.GetChild(i).gameObject.GetComponent<Renderer>().material.color = color;
-        } 
+        }
+        //Bullet Stock
+        for (int i = 0; i < noOfBulletsInStock; i++)
+        {
+            bullets[i] = Instantiate(bulletPrefab, m_bulletStockPos.position, m_bulletStockPos.rotation) as GameObject;
+            Debug.Log("Bullet added to stock");
+        }
     }
 
 }

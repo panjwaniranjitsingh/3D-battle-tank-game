@@ -89,7 +89,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57b64f2b0c07eaa4db1175a470e00c15, type: 2}
+  - {fileID: 0}
   - {fileID: 2100000, guid: c4c5f95d06932564c8672b4bafeb1b28, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4a64d735101584fbdd2b01c9ed6dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTanks: {fileID: 0}
   moveSpeed: 0
   bulletPrefab: {fileID: 2226244036831714572, guid: 3c7ced5fc37c04542b62bdda6678198e,
     type: 3}
@@ -227,6 +228,7 @@ MonoBehaviour:
   bulletForce: 1000
   health: 0
   damage: 0
+  color: {r: 0.990566, g: 0.032707386, b: 0.032707386, a: 0}
 --- !u!1 &761138957497016378
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +287,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57b64f2b0c07eaa4db1175a470e00c15, type: 2}
+  - {fileID: 0}
   - {fileID: 2100000, guid: 574c4e070e5dd0a40a02b979f582a836, type: 2}
   - {fileID: 2100000, guid: c4c5f95d06932564c8672b4bafeb1b28, type: 2}
   m_StaticBatchInfo:
@@ -366,7 +368,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57b64f2b0c07eaa4db1175a470e00c15, type: 2}
+  - {fileID: 0}
   - {fileID: 2100000, guid: c4c5f95d06932564c8672b4bafeb1b28, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -446,7 +448,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57b64f2b0c07eaa4db1175a470e00c15, type: 2}
+  - {fileID: 0}
   - {fileID: 2100000, guid: c4c5f95d06932564c8672b4bafeb1b28, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

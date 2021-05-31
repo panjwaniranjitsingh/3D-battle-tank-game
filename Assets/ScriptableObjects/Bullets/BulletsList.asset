@@ -10,10 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aac61e9a9d7078d44869a955b39b4a9e, type: 3}
-  m_Name: Bullets
+  m_Name: BulletsList
   m_EditorClassIdentifier: 
   Bullets:
-  - {fileID: 11400000, guid: 53e41a25dfdae69439160f1a099ddfff, type: 2}
-  - {fileID: 11400000, guid: f88f14e6c01f31f4c8d8e494fdacd21c, type: 2}
-  - {fileID: 11400000, guid: 50fd39bfd143a6c46bd407863bae6119, type: 2}
-  - {fileID: 11400000, guid: 6b40cdae3ffaba947a4533a5d02441c4, type: 2}
+  - BulletType: 1
+    BulletName: Slow
+    BulletForce: 500
+    Damage: 0
+  - BulletType: 3
+    BulletName: Medium
+    BulletForce: 1000
+    Damage: 0
+  - BulletType: 2
+    BulletName: Fast
+    BulletForce: 2000
+    Damage: 0

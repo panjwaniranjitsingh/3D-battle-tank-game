@@ -12,13 +12,18 @@ public class SingletonDemo<T>:MonoBehaviour where T:MonoBehaviour
         {
             if(instance==null)
             {
-                GameObject obj = new GameObject();
+                instance = FindObjectOfType<T>();
 
-                obj.name = typeof(T).ToString();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject();
 
-                instance = obj.AddComponent<T>();
+                    obj.name = typeof(T).ToString();
 
-                DontDestroyOnLoad(obj);
+                    instance = obj.AddComponent<T>();
+
+                    DontDestroyOnLoad(obj);
+                }
             }
         }
 
