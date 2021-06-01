@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class TankController : SingletonDemo<TankController>
+public class TankController : SingletonDemo<TankController>,IDamageable
 {
+    [Header("Properties")]
     [SerializeField] Joystick joystick;
     [SerializeField] float horizontal,vertical;
     [SerializeField] float moveSpeed;
-    const float TURNSPEED=50f;
-    private Rigidbody m_tankRigidbody;
-    const string HORIZONTAL = "Horizontal1";
-    const string VERTICAL = "Vertical1";
-    Color BLUE = new Color32(20, 125, 248, 255);
-    Color RED = new Color32(167, 22, 22, 255);
-    Color GREEN = new Color32(57, 116, 57, 255);
-    Color YELLOW = new Color32(150, 154, 15, 255);
+    [SerializeField] float health;
+    public float damage;
+    [SerializeField] Color color;
+    
+    [Header("Bullet")]
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] private Transform m_bulletPos;
     [SerializeField] BulletScriptableObject playerBulletSO;
@@ -21,10 +18,17 @@ public class TankController : SingletonDemo<TankController>
     GameObject[] bullets;
     [SerializeField] int noOfBulletsInStock = 10;
     [SerializeField] int noOfBulletsFired = 0;
-    [SerializeField] float health;
-    public float damage;
-    [SerializeField] Color color;
-    void Start()
+
+    const float TURNSPEED = 50f;
+    private Rigidbody m_tankRigidbody;
+    const string HORIZONTAL = "Horizontal1";
+    const string VERTICAL = "Vertical1";
+    Color BLUE = new Color32(20, 125, 248, 255);
+    Color RED = new Color32(167, 22, 22, 255);
+    Color GREEN = new Color32(57, 116, 57, 255);
+    Color YELLOW = new Color32(150, 154, 15, 255);
+
+    void Awake()
     {
         m_tankRigidbody = GetComponent<Rigidbody>();
         bullets = new GameObject[noOfBulletsInStock];
@@ -62,7 +66,7 @@ public class TankController : SingletonDemo<TankController>
 
     public void FireBullet()
     { 
-        bullets[noOfBulletsFired].GetComponent<Bullet>().FireBullet(color, m_bulletPos, playerBulletSO, gameObject);
+        bullets[noOfBulletsFired].GetComponent<Bullet>().FireBullet();
         noOfBulletsFired++;
         if (noOfBulletsFired == noOfBulletsInStock)
             noOfBulletsFired = 0;
@@ -100,8 +104,20 @@ public class TankController : SingletonDemo<TankController>
         for (int i = 0; i < noOfBulletsInStock; i++)
         {
             bullets[i] = Instantiate(bulletPrefab, m_bulletStockPos.position, m_bulletStockPos.rotation) as GameObject;
-            Debug.Log("Bullet added to stock");
+            //Debug.Log("Bullet added to stock");
+            bullets[i].GetComponent<Bullet>().SetBullet(color, m_bulletPos, playerBulletSO, gameObject);
         }
     }
 
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            //Player Dies
+            Debug.Log("Player is Dead");
+            gameObject.SetActive(false);
+            Time.timeScale = 0;
+        }
+    }
 }

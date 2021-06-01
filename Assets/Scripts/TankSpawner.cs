@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TankSpawner : SingletonDemo<TankSpawner>
 {
@@ -10,6 +11,9 @@ public class TankSpawner : SingletonDemo<TankSpawner>
     [SerializeField] TankScriptableObjectList allPlayerTanks;
     [SerializeField] EnemyTankScriptableObjectList allEnemyTanks;
     [SerializeField] BulletScriptableObjectList allBullets;
+
+    [SerializeField] float timeToEnableEnemies = 60f;
+    
     void Start()
     {
         int selectPlayerType = UnityEngine.Random.Range(0, allPlayerTanks.Tanks.Length);
@@ -33,5 +37,15 @@ public class TankSpawner : SingletonDemo<TankSpawner>
             //Debug.Log("Player Won");
         }
     }
-  
+
+    public void EnableEnemy(GameObject enemy)
+    {
+        StartCoroutine(EnableGameObject(enemy, timeToEnableEnemies));
+    }
+
+    IEnumerator EnableGameObject(GameObject myGameObject, float time)
+    {
+        yield return new WaitForSeconds(time);
+        myGameObject.SetActive(true);
+    }
 }
