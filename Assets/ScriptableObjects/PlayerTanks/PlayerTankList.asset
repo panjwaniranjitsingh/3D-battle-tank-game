@@ -16,20 +16,20 @@ MonoBehaviour:
   - TankColor: 1
     TankName: GreenRegularTank
     Speed: 1000
-    Health: 500
+    Health: 5000
     Damage: 25
   - TankColor: 2
     TankName: RedFastTank
     Speed: 2000
-    Health: 300
+    Health: 3000
     Damage: 25
   - TankColor: 3
     TankName: BlueRegularTank
     Speed: 1000
-    Health: 500
+    Health: 5000
     Damage: 25
   - TankColor: 4
     TankName: YellowStrongTank
     Speed: 750
-    Health: 1000
+    Health: 10000
     Damage: 25

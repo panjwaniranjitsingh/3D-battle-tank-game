@@ -125,3 +125,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 0
   BulletStockPos: {x: 0, y: 0, z: 0}
+  BulletExplosion: {fileID: 195792, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}

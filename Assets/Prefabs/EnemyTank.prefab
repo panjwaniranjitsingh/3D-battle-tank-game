@@ -230,6 +230,7 @@ MonoBehaviour:
   damage: 0
   color: {r: 0.990566, g: 0.032707386, b: 0.032707386, a: 0}
   spawnPosition: {fileID: 0}
+  TankExplosion: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
   bulletPrefab: {fileID: 2226244036831714572, guid: 3c7ced5fc37c04542b62bdda6678198e,
     type: 3}
   m_bulletPos: {fileID: 218680163346986382}

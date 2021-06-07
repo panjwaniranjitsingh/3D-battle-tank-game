@@ -14,7 +14,7 @@ public class EnemyChasing : EnemyState
     public override void OnEnterState()
     {
         base.OnEnterState();
-        Debug.Log("Enemy Chasing State");
+        //Debug.Log("Enemy Chasing State");
     }
 
     public override void OnExitState()

@@ -286,6 +286,10 @@ MonoBehaviour:
   horizontal: 0
   vertical: 0
   moveSpeed: 1000
+  health: 0
+  damage: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
+  TankExplosion: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
   bulletPrefab: {fileID: 2226244036831714572, guid: 3c7ced5fc37c04542b62bdda6678198e,
     type: 3}
   m_bulletPos: {fileID: 218680163346986382}
@@ -297,9 +301,6 @@ MonoBehaviour:
   m_bulletStockPos: {fileID: 225458613}
   noOfBulletsInStock: 10
   noOfBulletsFired: 0
-  health: 0
-  damage: 0
-  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &761138957497016378
 GameObject:
   m_ObjectHideFlags: 0

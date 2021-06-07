@@ -17,7 +17,7 @@ public class EnemyAttacking : EnemyState
     public override void OnEnterState()
     {
         base.OnEnterState();
-        Debug.Log("Enemy Chasing State");
+        //Debug.Log("Enemy Attacking State");
     }
 
     public override void OnExitState()
@@ -32,11 +32,13 @@ public class EnemyAttacking : EnemyState
         timeElapsed += Time.deltaTime;
         if (timeElapsed > bulletFireCounter)
         {
-            bulletFireCounter = 0;
+            timeElapsed = 0;
             enemyTankController.FireBullet();
         }
         if (Vector3.Distance(transform.position, playerPos) > 10f)
             enemyTankController.ChangeState(enemyTankController.enemyChasing);
+        if(!TankController.GetInstance().gameObject.activeSelf)
+            enemyTankController.ChangeState(enemyTankController.enemyIdleState);
     }
 
     private void EnemyMove()

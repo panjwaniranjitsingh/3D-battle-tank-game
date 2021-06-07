@@ -9,7 +9,7 @@ public class EnemyIdleState : EnemyState
     public override void OnEnterState()
     {
         base.OnEnterState();
-        Debug.Log("Enemy Idle State");
+        //Debug.Log("Enemy Idle State");
         enemyTankController.m_tankRigidbody.velocity = Vector3.zero;
     }
 

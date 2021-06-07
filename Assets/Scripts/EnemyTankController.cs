@@ -10,7 +10,8 @@ public class EnemyTankController : MonoBehaviour,IDamageable
     public float damage;
     [SerializeField] Color color;
     public Transform spawnPosition;
-    
+    [SerializeField] GameObject TankExplosion;
+
     [Header("Bullet")]
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] private Transform m_bulletPos;
@@ -22,10 +23,10 @@ public class EnemyTankController : MonoBehaviour,IDamageable
     GameObject[] bullets;
     public Rigidbody m_tankRigidbody;
     float FullHealth;
-    Color BLUE = new Color32(20, 125, 248, 255);
-    Color RED = new Color32(167, 22, 22, 255);
-    Color GREEN = new Color32(57, 116, 57, 255);
-    Color YELLOW = new Color32(150, 154, 15, 255);
+    readonly Color BLUE = new Color32(20, 125, 248, 255);
+    readonly Color RED = new Color32(167, 22, 22, 255);
+    readonly Color GREEN = new Color32(57, 116, 57, 255);
+    readonly Color YELLOW = new Color32(150, 154, 15, 255);
 
     private EnemyState currentState;
     [Header("EnemyStates")]
@@ -107,11 +108,12 @@ public class EnemyTankController : MonoBehaviour,IDamageable
 
     private void OnCollisionEnter(Collision other)
     {
-        //Debug.Log("onCollisionEntered with "+other.gameObject.name);
-        if (other.gameObject.GetComponent<TankController>()!=null)
+        TankController playerTC = other.gameObject.GetComponent<TankController>();
+        if (playerTC!=null)
         {
             //Player Dies
-            other.gameObject.GetComponent<TankController>().TakeDamage(damage);
+            playerTC.TakeDamage(damage);
+            health -= playerTC.damage;
         }
     }
 
@@ -119,6 +121,8 @@ public class EnemyTankController : MonoBehaviour,IDamageable
     {
         health = FullHealth;
         ChangeState(enemyIdleState);
+        //Debug.Log("EnemyTank is" + gameObject.name);
+        transform.position = spawnPosition.position;
     }
 
     public void TakeDamage(float damage)
@@ -127,9 +131,11 @@ public class EnemyTankController : MonoBehaviour,IDamageable
         if (health <= 0)
         {
             //Enemy Dies
+            GameObject explosionEffect = Instantiate(TankExplosion, transform.position, transform.rotation);
+            Destroy(explosionEffect, 1f);
             gameObject.SetActive(false);
             TankSpawner.GetInstance().noOfEnemies--;
-            TankSpawner.GetInstance().EnableEnemy(gameObject);
+            //TankSpawner.GetInstance().EnableEnemy(gameObject);
         }
     } 
 }

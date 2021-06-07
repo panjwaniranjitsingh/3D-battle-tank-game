@@ -20,7 +20,7 @@ public class EnemyPatrolling : EnemyState
     public override void OnEnterState()
     {
         base.OnEnterState();
-        Debug.Log("Enemy Patrolling State");
+        //Debug.Log("Enemy Patrolling State");
         canMove = true;
     }
 
@@ -44,7 +44,7 @@ public class EnemyPatrolling : EnemyState
     private void EnemyMove()
     {
         Vector3 playerPos = TankController.GetInstance().gameObject.transform.position;
-        Debug.Log("Distance="+ Vector3.Distance(transform.position, playerPos), gameObject);
+        //Debug.Log("Distance="+ Vector3.Distance(transform.position, playerPos), gameObject);
         Vector3 nextPos = PatrolPos[enemyTarget];
         var localTarget = transform.InverseTransformPoint(nextPos);
         float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
@@ -60,7 +60,7 @@ public class EnemyPatrolling : EnemyState
         {
             //transform.position = Vector3.Lerp(transform.position,EnemytargetPos[enemyTarget],Time.deltaTime);
             enemyTankController.m_tankRigidbody.velocity = dir;
-            if (Mathf.Abs(transform.position.x - nextPos.x) < 0.1 && enemyTarget < PatrolPos.Length)
+            if (Vector3.Distance(transform.position,nextPos) < 0.1 && enemyTarget < PatrolPos.Length)
             {
                 enemyTarget++;
                 if (enemyTarget == PatrolPos.Length)

@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
     public float Damage;
     private Transform bulletFirePos;
     [SerializeField] Vector3 BulletStockPos;
+    [SerializeField] GameObject BulletExplosion;
     private void Awake()
     {
         BulletStockPos = transform.position;
@@ -16,7 +17,7 @@ public class Bullet : MonoBehaviour
         gameObject.transform.rotation = bulletFirePos.rotation;
         gameObject.GetComponent<SphereCollider>().enabled = true;
         gameObject.GetComponent<Rigidbody>().AddForce(bulletFirePos.forward * BulletForce);
-        //Destroy(gameObject, 3f);
+       
     }
 
     public void SetBullet(Color color, Transform bulletPos, BulletScriptableObject bulletSO, GameObject FiredFrom)
@@ -34,11 +35,13 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject bulletEffect= Instantiate(BulletExplosion, transform.position, transform.rotation);
+        Destroy(bulletEffect, 1f);
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if(damageable!=null)
         {
             damageable.TakeDamage(Damage);
-        }
+        } 
         SendBulletToStock();
     }
 
@@ -47,10 +50,5 @@ public class Bullet : MonoBehaviour
         gameObject.transform.position = BulletStockPos;
         gameObject.GetComponent<SphereCollider>().enabled = false;
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -9,7 +9,8 @@ public class TankController : SingletonDemo<TankController>,IDamageable
     [SerializeField] float health;
     public float damage;
     [SerializeField] Color color;
-    
+    [SerializeField] GameObject TankExplosion;
+
     [Header("Bullet")]
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] private Transform m_bulletPos;
@@ -23,10 +24,10 @@ public class TankController : SingletonDemo<TankController>,IDamageable
     private Rigidbody m_tankRigidbody;
     const string HORIZONTAL = "Horizontal1";
     const string VERTICAL = "Vertical1";
-    Color BLUE = new Color32(20, 125, 248, 255);
-    Color RED = new Color32(167, 22, 22, 255);
-    Color GREEN = new Color32(57, 116, 57, 255);
-    Color YELLOW = new Color32(150, 154, 15, 255);
+    readonly Color BLUE = new Color32(20, 125, 248, 255);
+    readonly Color RED = new Color32(167, 22, 22, 255);
+    readonly Color GREEN = new Color32(57, 116, 57, 255);
+    readonly Color YELLOW = new Color32(150, 154, 15, 255);
 
     void Awake()
     {
@@ -115,9 +116,11 @@ public class TankController : SingletonDemo<TankController>,IDamageable
         if (health <= 0)
         {
             //Player Dies
+            GameObject explosionEffect = Instantiate(TankExplosion, transform.position, transform.rotation);
+            Destroy(explosionEffect, 1f);
             Debug.Log("Player is Dead");
+            TankSpawner.GetInstance().StartDestruction();
             gameObject.SetActive(false);
-            Time.timeScale = 0;
         }
     }
 }
