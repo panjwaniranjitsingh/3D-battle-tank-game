@@ -17,7 +17,7 @@ public class TankController : SingletonDemo<TankController>,IDamageable
     [SerializeField] BulletScriptableObject playerBulletSO;
     [SerializeField] private Transform m_bulletStockPos;
     GameObject[] bullets;
-    [SerializeField] int noOfBulletsInStock = 10;
+    [SerializeField] int noOfBulletsInStock = 20;
     [SerializeField] int noOfBulletsFired = 0;
 
     const float TURNSPEED = 50f;
@@ -67,6 +67,7 @@ public class TankController : SingletonDemo<TankController>,IDamageable
 
     public void FireBullet()
     { 
+        ServiceEvents.GetInstance().InvokeBulletFiredEvent();
         bullets[noOfBulletsFired].GetComponent<Bullet>().FireBullet();
         noOfBulletsFired++;
         if (noOfBulletsFired == noOfBulletsInStock)

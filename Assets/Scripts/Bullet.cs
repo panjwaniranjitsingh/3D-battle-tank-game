@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
         gameObject.transform.rotation = bulletFirePos.rotation;
         gameObject.GetComponent<SphereCollider>().enabled = true;
         gameObject.GetComponent<Rigidbody>().AddForce(bulletFirePos.forward * BulletForce);
-       
     }
 
     public void SetBullet(Color color, Transform bulletPos, BulletScriptableObject bulletSO, GameObject FiredFrom)

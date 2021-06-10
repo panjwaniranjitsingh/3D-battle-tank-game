@@ -2,7 +2,6 @@
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
-using System;
 
 public class TankSpawner : SingletonDemo<TankSpawner>
 {

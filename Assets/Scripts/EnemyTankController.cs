@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyTankController : MonoBehaviour,IDamageable
 {
@@ -135,7 +133,7 @@ public class EnemyTankController : MonoBehaviour,IDamageable
             Destroy(explosionEffect, 1f);
             gameObject.SetActive(false);
             TankSpawner.GetInstance().noOfEnemies--;
-            //TankSpawner.GetInstance().EnableEnemy(gameObject);
+            TankSpawner.GetInstance().EnableEnemy(gameObject);
         }
     } 
 }

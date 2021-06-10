@@ -57,7 +57,7 @@ public class EnemyAttacking : EnemyState
         else if (deltaRotation == Quaternion.identity)
         {
             //transform.position = Vector3.Lerp(transform.position,EnemytargetPos[enemyTarget],Time.deltaTime);
-            enemyTankController.m_tankRigidbody.velocity = dir;
+            enemyTankController.m_tankRigidbody.velocity = dir/2;
         }
     }
 }
