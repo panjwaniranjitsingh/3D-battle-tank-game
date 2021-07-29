@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     {
         gameObject.transform.position = bulletFirePos.position;
         gameObject.transform.rotation = bulletFirePos.rotation;
-        gameObject.GetComponent<SphereCollider>().enabled = true;
+        gameObject.GetComponent<Collider>().enabled = true;
         gameObject.GetComponent<Rigidbody>().AddForce(bulletFirePos.forward * BulletForce);
     }
 
@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
     public void SendBulletToStock()
     {
         gameObject.transform.position = BulletStockPos;
-        gameObject.GetComponent<SphereCollider>().enabled = false;
+        gameObject.GetComponent<Collider>().enabled = false;
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 }

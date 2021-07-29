@@ -21,7 +21,7 @@ public class AchievementSystem : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         enemiesKilled = PlayerPrefs.GetInt("enemiesKilled", 0);
         bulletsFired = PlayerPrefs.GetInt("bulletsFired", 0);
         noOfGamesPlayed = PlayerPrefs.GetInt("noOfGamesPlayed", 0);

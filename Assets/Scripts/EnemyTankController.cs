@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyTankController : MonoBehaviour,IDamageable
 {
@@ -9,6 +10,7 @@ public class EnemyTankController : MonoBehaviour,IDamageable
     [SerializeField] Color color;
     public Transform spawnPosition;
     [SerializeField] GameObject TankExplosion;
+    [SerializeField] Image healthBar;
 
     [Header("Bullet")]
     [SerializeField] GameObject bulletPrefab;
@@ -96,6 +98,7 @@ public class EnemyTankController : MonoBehaviour,IDamageable
         {
             TankRenderers.transform.GetChild(i).gameObject.GetComponent<Renderer>().material.color = color;
         }
+        healthBar.color = color;
         //Bullet Stock
         for (int i = 0; i < noOfBulletsInStock; i++)
         {
@@ -120,12 +123,15 @@ public class EnemyTankController : MonoBehaviour,IDamageable
         health = FullHealth;
         ChangeState(enemyIdleState);
         //Debug.Log("EnemyTank is" + gameObject.name);
-        transform.position = spawnPosition.position;
+        if(spawnPosition!=null)
+            transform.position = spawnPosition.position;
     }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        TankController.GetInstance().AddScore(50);
+        healthBar.fillAmount = health / FullHealth;
         if (health <= 0)
         {
             //Enemy Dies

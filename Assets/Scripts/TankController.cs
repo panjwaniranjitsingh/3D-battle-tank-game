@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class TankController : SingletonDemo<TankController>,IDamageable
 {
@@ -7,9 +9,13 @@ public class TankController : SingletonDemo<TankController>,IDamageable
     [SerializeField] float horizontal,vertical;
     [SerializeField] float moveSpeed;
     [SerializeField] float health;
+    [SerializeField] float currentHealth;
+    [SerializeField] int score;
     public float damage;
     [SerializeField] Color color;
     [SerializeField] GameObject TankExplosion;
+    [SerializeField] Image healthBar;
+    [SerializeField] TextMeshProUGUI ScoreText;
 
     [Header("Bullet")]
     [SerializeField] GameObject bulletPrefab;
@@ -31,9 +37,17 @@ public class TankController : SingletonDemo<TankController>,IDamageable
 
     void Awake()
     {
+        score = 0;
+        DisplayScore();
         m_tankRigidbody = GetComponent<Rigidbody>();
         bullets = new GameObject[noOfBulletsInStock];
     }
+
+    private void DisplayScore()
+    {
+        ScoreText.text = "Score-"+score.ToString();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -79,6 +93,7 @@ public class TankController : SingletonDemo<TankController>,IDamageable
         gameObject.name = tankScriptableObject.TankName;
         moveSpeed = tankScriptableObject.Speed;
         health = tankScriptableObject.Health;
+        currentHealth = health;
         damage = tankScriptableObject.Damage;
         playerBulletSO = bulletSO;
         GameObject TankRenderers = gameObject.transform.GetChild(0).gameObject;
@@ -102,6 +117,7 @@ public class TankController : SingletonDemo<TankController>,IDamageable
         {
             TankRenderers.transform.GetChild(i).gameObject.GetComponent<Renderer>().material.color = color;
         }
+        healthBar.color = color;
         //Bullet Stock
         for (int i = 0; i < noOfBulletsInStock; i++)
         {
@@ -113,8 +129,9 @@ public class TankController : SingletonDemo<TankController>,IDamageable
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
+        currentHealth -= damage;
+        healthBar.fillAmount = currentHealth / health;
+        if (currentHealth <= 0)
         {
             //Player Dies
             GameObject explosionEffect = Instantiate(TankExplosion, transform.position, transform.rotation);
@@ -123,5 +140,11 @@ public class TankController : SingletonDemo<TankController>,IDamageable
             TankSpawner.GetInstance().StartDestruction();
             gameObject.SetActive(false);
         }
+    }
+
+    public void AddScore(int addToScore)
+    {
+        score += addToScore;
+        DisplayScore();
     }
 }
